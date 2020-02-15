@@ -8,7 +8,7 @@ class BookTest {
 
     @Test
     public void show_info() {
-        Book book = new Book("1", "book");
-        assertThat(book.showInfo()).isEqualTo("id: 1, name: book");
+        Book book = new Book("1", "book", "Lucy", 2020);
+        assertThat(book.showInfo()).isEqualTo("id: 1, author: Lucy, published year: 2020, name: book");
     }
 }
