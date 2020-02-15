@@ -1,6 +1,7 @@
 package com.twu;
 
 import com.twu.model.BooksList;
+import com.twu.model.exception.NotExistException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         assertThat(mockOutPut.toString()).contains(BibliotecaApplication.WELCOME);
-        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.LIST_OF_BOOKS);
+        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.MENU);
     }
 
     @Test
@@ -61,5 +62,28 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         verify(mockBooksList, times(1)).showInfo();
+    }
+
+    @Test
+    void check_out_a_book() {
+        provideInSteam("2\n1");
+        BooksList mockBooksList = mock(BooksList.class);
+        BibliotecaApplication.booksList = mockBooksList;
+
+        BibliotecaApplication.welcome();
+
+        verify(mockBooksList, times(1)).checkout("1");
+    }
+
+    @Test
+    void check_out_a_not_exist_book() {
+        provideInSteam("2\n1");
+        BooksList mockBooksList = mock(BooksList.class);
+        BibliotecaApplication.booksList = mockBooksList;
+        doThrow(new NotExistException("1")).when(mockBooksList).checkout(anyString());
+
+        BibliotecaApplication.welcome();
+
+        assertThat(mockOutPut.toString()).contains("book not exist, id: 1");
     }
 }

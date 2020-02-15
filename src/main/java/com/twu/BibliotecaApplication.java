@@ -1,11 +1,14 @@
 package com.twu;
 
 import com.twu.model.BooksList;
+import com.twu.model.exception.NotExistException;
 
 public class BibliotecaApplication {
 
     public final static String LIST_OF_BOOKS = "List of books.";
-    public final static String MENU = "================MENU================\n1. " + LIST_OF_BOOKS;
+    public final static String CHECK_OUT_BOOK = "Check-out a book.";
+    public final static String MENU = "================MENU================\n1. " +
+            LIST_OF_BOOKS + "\n2." + CHECK_OUT_BOOK;
     public final static String WELCOME = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static String SELECT_ERR_OPTION = "Please select a valid selection.";
     public static BooksList booksList = new BooksList();
@@ -20,8 +23,18 @@ public class BibliotecaApplication {
 
         String option = ConsoleUtil.next();
 
-        if ("1".equals(option))
-            booksList.showInfo();
-        ConsoleUtil.println(SELECT_ERR_OPTION);
+
+        try {
+            switch (option) {
+                case "1":
+                    booksList.showInfo();
+                case "2":
+                    booksList.checkout(ConsoleUtil.next());
+                default:
+                    ConsoleUtil.println(SELECT_ERR_OPTION);
+            }
+        } catch (NotExistException e) {
+            ConsoleUtil.println(e.getMessage());
+        }
     }
 }
