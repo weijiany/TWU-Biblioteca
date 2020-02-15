@@ -1,7 +1,7 @@
 package com.twu;
 
 import com.twu.model.BooksList;
-import com.twu.model.exception.NotExistException;
+import com.twu.model.exception.NotAvailableException;
 
 public class BibliotecaApplication {
 
@@ -35,7 +35,7 @@ public class BibliotecaApplication {
                 default:
                     ConsoleUtil.println(SELECT_ERR_OPTION);
             }
-        } catch (NotExistException e) {
+        } catch (NotAvailableException e) {
             ConsoleUtil.println(e.getMessage());
         }
     }

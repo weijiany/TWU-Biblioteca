@@ -1,6 +1,6 @@
 package com.twu.model;
 
-import com.twu.model.exception.NotExistException;
+import com.twu.model.exception.NotAvailableException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ public class BooksList {
     public void checkout(String bookId) {
         Book book = books.stream()
                 .filter(b -> bookId.equals(b.getId())).findFirst()
-                .orElseThrow(() -> new NotExistException(bookId));
+                .orElseThrow(NotAvailableException::new);
         books.remove(book);
     }
 }

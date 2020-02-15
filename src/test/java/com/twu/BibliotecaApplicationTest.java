@@ -1,12 +1,10 @@
 package com.twu;
 
 import com.twu.model.BooksList;
-import com.twu.model.exception.NotExistException;
+import com.twu.model.exception.NotAvailableException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +22,7 @@ class BibliotecaApplicationTest {
     public void beforeEach() {
         mockOutPut = new ByteArrayOutputStream();
         ConsoleUtil.out = new PrintStream(mockOutPut);
-        provideInSteam("1");
+        provideInSteam("1\n1");
     }
 
     @AfterEach
@@ -55,7 +53,7 @@ class BibliotecaApplicationTest {
 
     @Test
     void list_all_of_books() {
-        provideInSteam("1");
+        provideInSteam("1\n1");
         BooksList mockBooksList = mock(BooksList.class);
         BibliotecaApplication.booksList = mockBooksList;
 
@@ -81,10 +79,10 @@ class BibliotecaApplicationTest {
         provideInSteam("2\n1");
         BooksList mockBooksList = mock(BooksList.class);
         BibliotecaApplication.booksList = mockBooksList;
-        doThrow(new NotExistException("1")).when(mockBooksList).checkout(anyString());
+        doThrow(new NotAvailableException()).when(mockBooksList).checkout(anyString());
 
         BibliotecaApplication.welcome();
 
-        assertThat(mockOutPut.toString()).contains("book not exist, id: 1");
+        assertThat(mockOutPut.toString()).contains(NotAvailableException.MESSAGE);
     }
 }

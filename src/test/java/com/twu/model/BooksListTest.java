@@ -1,5 +1,6 @@
 package com.twu.model;
 
+import com.twu.model.exception.NotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -29,6 +30,6 @@ class BooksListTest {
     public void should_throw_exception_when_check_out_a_book_given_id_not_exist() {
         BooksList booksList = new BooksList(new Book("1", "book", "Lucy", 2020));
         String id = "not exist";
-        assertThatThrownBy(() -> booksList.checkout(id)).hasMessage("book not exist, id: " + id);
+        assertThatThrownBy(() -> booksList.checkout(id)).hasMessage(NotAvailableException.MESSAGE);
     }
 }
