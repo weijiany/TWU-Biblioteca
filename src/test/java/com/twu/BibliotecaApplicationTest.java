@@ -73,6 +73,7 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         verify(mockBooksList, times(1)).checkout("1");
+        assertThat(mockOutPut.toString()).contains("Thank you! Enjoy the book.");
     }
 
     @Test
