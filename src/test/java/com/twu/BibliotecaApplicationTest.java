@@ -1,8 +1,11 @@
 package com.twu;
 
+import com.twu.model.BooksList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.verification.VerificationMode;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +13,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class BibliotecaApplicationTest {
 
@@ -19,6 +23,7 @@ class BibliotecaApplicationTest {
     public void beforeEach() {
         mockOutPut = new ByteArrayOutputStream();
         ConsoleUtil.out = new PrintStream(mockOutPut);
+        provideInSteam("1");
     }
 
     @AfterEach
@@ -31,16 +36,10 @@ class BibliotecaApplicationTest {
     }
 
     @Test
-    void welcome() {
+    void welcome_and_menu() {
         BibliotecaApplication.welcome();
 
         assertThat(mockOutPut.toString()).contains(BibliotecaApplication.WELCOME);
-    }
-
-    @Test
-    void menu() {
-        BibliotecaApplication.welcome();
-
         assertThat(mockOutPut.toString()).contains(BibliotecaApplication.LIST_OF_BOOKS);
     }
 
@@ -51,5 +50,16 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         assertThat(mockOutPut.toString()).contains("Please select a valid selection.");
+    }
+
+    @Test
+    void list_all_of_books() {
+        provideInSteam("1");
+        BooksList mockBooksList = mock(BooksList.class);
+        BibliotecaApplication.booksList = mockBooksList;
+
+        BibliotecaApplication.welcome();
+
+        verify(mockBooksList, times(1)).showInfo();
     }
 }
