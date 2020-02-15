@@ -30,4 +30,11 @@ class BibliotecaApplicationTest {
 
         assertThat(mockOutPut.toString()).contains(BibliotecaApplication.WELCOME);
     }
+
+    @Test
+    void menu() {
+        BibliotecaApplication.welcome();
+
+        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.LIST_OF_BOOKS);
+    }
 }
