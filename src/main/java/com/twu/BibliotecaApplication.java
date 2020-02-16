@@ -12,6 +12,7 @@ public class BibliotecaApplication {
             LIST_OF_BOOKS + "\n2." + CHECK_OUT_BOOK + "\n3." + RETURN_BOOK;
     public final static String WELCOME = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     public static final String CHECK_OUT_SUCCESSFULLY = "Thank you! Enjoy the book.";
+    public static final String RETURN_SUCCESSFULLY = "Thank you for returning the book.";
     public static String SELECT_ERR_OPTION = "Please select a valid selection.";
     public static BooksList booksList = new BooksList();
 
@@ -37,7 +38,7 @@ public class BibliotecaApplication {
                     break;
                 case "3":
                     booksList.returnABook(ConsoleUtil.next());
-                    ConsoleUtil.println(CHECK_OUT_SUCCESSFULLY);
+                    ConsoleUtil.println(RETURN_SUCCESSFULLY);
                     break;
                 default:
                     ConsoleUtil.println(SELECT_ERR_OPTION);

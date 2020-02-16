@@ -95,5 +95,6 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         verify(mockBooksList, times(1)).returnABook("1");
+        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.RETURN_SUCCESSFULLY);
     }
 }
