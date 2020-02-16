@@ -5,6 +5,7 @@ import com.twu.model.exception.NotAvailableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BooksList {
@@ -17,8 +18,9 @@ public class BooksList {
 
     public String showInfo() {
         StringBuilder sb = new StringBuilder();
-        IntStream.range(0, books.size())
-                .forEach(index -> sb.append(index + 1).append(".").append(books.get(index).showInfo()).append("\n"));
+        List<Book> canCheckoutBooks = books.stream().filter(Book::canCheckout).collect(Collectors.toList());
+        IntStream.range(0, canCheckoutBooks.size())
+                .forEach(index -> sb.append(index + 1).append(".").append(canCheckoutBooks.get(index).showInfo()).append("\n"));
 
         return sb.toString();
     }
@@ -27,6 +29,14 @@ public class BooksList {
         Book book = books.stream()
                 .filter(b -> bookId.equals(b.getId())).findFirst()
                 .orElseThrow(NotAvailableException::new);
-        books.remove(book);
+        book.checkout();
+    }
+
+    public void returnABook(String bookId) {
+        books.stream()
+                .filter(b -> b.getId().equals(bookId))
+                .findFirst()
+                .orElseThrow(NotAvailableException::new)
+                .back();
     }
 }

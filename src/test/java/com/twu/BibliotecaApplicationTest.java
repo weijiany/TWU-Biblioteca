@@ -22,7 +22,7 @@ class BibliotecaApplicationTest {
     public void beforeEach() {
         mockOutPut = new ByteArrayOutputStream();
         ConsoleUtil.out = new PrintStream(mockOutPut);
-        provideInSteam("1\n1");
+        provideInSteam("1");
     }
 
     @AfterEach
@@ -48,7 +48,7 @@ class BibliotecaApplicationTest {
 
         BibliotecaApplication.welcome();
 
-        assertThat(mockOutPut.toString()).contains("Please select a valid selection.");
+        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.SELECT_ERR_OPTION);
     }
 
     @Test
@@ -71,7 +71,7 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         verify(mockBooksList, times(1)).checkout("1");
-        assertThat(mockOutPut.toString()).contains("Thank you! Enjoy the book.");
+        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.CHECK_OUT_SUCCESSFULLY);
     }
 
     @Test
@@ -84,5 +84,16 @@ class BibliotecaApplicationTest {
         BibliotecaApplication.welcome();
 
         assertThat(mockOutPut.toString()).contains(NotAvailableException.MESSAGE);
+    }
+
+    @Test
+    void return_a_exist_book() {
+        provideInSteam("3\n1");
+        BooksList mockBooksList = mock(BooksList.class);
+        BibliotecaApplication.booksList = mockBooksList;
+
+        BibliotecaApplication.welcome();
+
+        verify(mockBooksList, times(1)).returnABook("1");
     }
 }
