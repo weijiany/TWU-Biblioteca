@@ -20,6 +20,7 @@ public class BibliotecaApplication {
     public final static String RETURN_SUCCESSFULLY = "Thank you for returning the book.";
     public final static String SELECT_ERR_OPTION = "Please select a valid selection.";
     public final static String USER_PASSWORD = "123-abc";
+    public final static String USER_INFO = "name: Lucy, email: example@TWU.com, phone number: 12345-678";
 
     public static BooksList booksList = new BooksList();
     public static MoviesList moviesList = new MoviesList();
@@ -34,7 +35,7 @@ public class BibliotecaApplication {
             ConsoleUtil.println("Login: ");
             String authentication = ConsoleUtil.next();
             if (USER_PASSWORD.equals(authentication)) {
-                ConsoleUtil.println("");
+                ConsoleUtil.println(USER_INFO);
                 return;
             }
             ConsoleUtil.println("Login err, please again.");

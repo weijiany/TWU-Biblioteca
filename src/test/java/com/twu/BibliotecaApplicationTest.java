@@ -45,7 +45,7 @@ class BibliotecaApplicationTest {
 
             BibliotecaApplication.login();
 
-            assertThat(mockOutPut.toString()).isEqualTo("Login: \n");
+            assertThat(mockOutPut.toString()).contains(BibliotecaApplication.USER_INFO);
         }
     }
 
