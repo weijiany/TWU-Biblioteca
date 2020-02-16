@@ -1,7 +1,8 @@
 package com.twu;
 
 import com.twu.model.BooksList;
-import com.twu.model.exception.NotAvailableException;
+import com.twu.model.exception.NotAVailableException;
+import com.twu.model.exception.NotAValidReturnException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,11 +80,11 @@ class BibliotecaApplicationTest {
         provideInSteam("2\n1");
         BooksList mockBooksList = mock(BooksList.class);
         BibliotecaApplication.booksList = mockBooksList;
-        doThrow(new NotAvailableException()).when(mockBooksList).checkout(anyString());
+        doThrow(new NotAVailableException()).when(mockBooksList).checkout(anyString());
 
         BibliotecaApplication.welcome();
 
-        assertThat(mockOutPut.toString()).contains(NotAvailableException.MESSAGE);
+        assertThat(mockOutPut.toString()).contains(NotAVailableException.MESSAGE);
     }
 
     @Test
@@ -96,5 +97,17 @@ class BibliotecaApplicationTest {
 
         verify(mockBooksList, times(1)).returnABook("1");
         assertThat(mockOutPut.toString()).contains(BibliotecaApplication.RETURN_SUCCESSFULLY);
+    }
+
+    @Test
+    void return_a_invalid_book() {
+        provideInSteam("3\n1");
+        BooksList mockBooksList = mock(BooksList.class);
+        BibliotecaApplication.booksList = mockBooksList;
+        doThrow(new NotAValidReturnException()).when(mockBooksList).returnABook(anyString());
+
+        BibliotecaApplication.welcome();
+
+        assertThat(mockOutPut.toString()).contains(NotAValidReturnException.MESSAGE);
     }
 }
