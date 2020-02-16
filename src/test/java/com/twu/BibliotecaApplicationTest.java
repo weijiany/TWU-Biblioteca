@@ -37,21 +37,36 @@ class BibliotecaApplicationTest {
         ConsoleUtil.scanner = new Scanner(new ByteArrayInputStream(str.getBytes()));
     }
 
-    @Test
-    void welcome_and_menu() {
-        BibliotecaApplication.welcome();
+    @Nested
+    class Login {
+        @Test
+        public void login_successful() {
+            provideInSteam(BibliotecaApplication.USER_PASSWORD);
 
-        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.WELCOME);
-        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.MENU);
+            BibliotecaApplication.login();
+
+            assertThat(mockOutPut.toString()).isEqualTo("Login: \n");
+        }
     }
 
-    @Test
-    void invalid_option() {
-        provideInSteam("invalid option");
+    @Nested
+    class Menu {
+        @Test
+        void welcome_and_menu() {
+            BibliotecaApplication.welcome();
 
-        BibliotecaApplication.welcome();
+            assertThat(mockOutPut.toString()).contains(BibliotecaApplication.WELCOME);
+            assertThat(mockOutPut.toString()).contains(BibliotecaApplication.MENU);
+        }
 
-        assertThat(mockOutPut.toString()).contains(BibliotecaApplication.SELECT_ERR_OPTION);
+        @Test
+        void invalid_option() {
+            provideInSteam("invalid option");
+
+            BibliotecaApplication.welcome();
+
+            assertThat(mockOutPut.toString()).contains(BibliotecaApplication.SELECT_ERR_OPTION);
+        }
     }
 
     @Nested

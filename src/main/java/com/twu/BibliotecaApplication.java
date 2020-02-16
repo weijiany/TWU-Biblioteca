@@ -16,15 +16,29 @@ public class BibliotecaApplication {
             LIST_OF_BOOKS + "\n2." + CHECK_OUT_BOOK + "\n3." + RETURN_BOOK +
             "\n4." + LIST_OF_MOVIES + "\n5." + CHECK_OUT_MOVIE + "\n0." + EXIT;
     public final static String WELCOME = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-    public static final String CHECK_OUT_SUCCESSFULLY = "Thank you! Enjoy the book.";
-    public static final String RETURN_SUCCESSFULLY = "Thank you for returning the book.";
-    public static String SELECT_ERR_OPTION = "Please select a valid selection.";
+    public final static String CHECK_OUT_SUCCESSFULLY = "Thank you! Enjoy the book.";
+    public final static String RETURN_SUCCESSFULLY = "Thank you for returning the book.";
+    public final static String SELECT_ERR_OPTION = "Please select a valid selection.";
+    public final static String USER_PASSWORD = "123-abc";
 
     public static BooksList booksList = new BooksList();
     public static MoviesList moviesList = new MoviesList();
 
     public static void main(String[] args) {
+        login();
         welcome();
+    }
+
+    public static void login() {
+        while (true) {
+            ConsoleUtil.println("Login: ");
+            String authentication = ConsoleUtil.next();
+            if (USER_PASSWORD.equals(authentication)) {
+                ConsoleUtil.println("");
+                return;
+            }
+            ConsoleUtil.println("Login err, please again.");
+        }
     }
 
     public static void welcome() {
