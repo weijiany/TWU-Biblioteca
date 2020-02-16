@@ -12,6 +12,9 @@ public class Movie {
     private Double movieRating;
     private boolean available;
 
+    public Movie() {
+    }
+
     public Movie(String id, String name, Integer year, String director, Double movieRating) {
         this(id, name, year, director, movieRating, true);
     }
@@ -27,5 +30,9 @@ public class Movie {
 
     public String showInfo() {
         return String.format("id: %s, name: %s, year: %d, director: %s, movie rating: %s", id, name, year, director, movieRating);
+    }
+
+    public void checkout() {
+        available = false;
     }
 }

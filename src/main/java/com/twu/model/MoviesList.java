@@ -1,5 +1,7 @@
 package com.twu.model;
 
+import com.twu.model.exception.NotAVailableException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,5 +24,13 @@ public class MoviesList {
         IntStream.range(0, availableMovies.size())
                 .forEach(index -> sb.append(index + 1).append(".").append(availableMovies.get(index).showInfo()).append("\n"));
         return sb.toString();
+    }
+
+    public void checkout(String id) {
+        Movie movie = movies.stream()
+                .filter(m -> id.equals(m.getId()))
+                .findFirst()
+                .orElse(new Movie());
+        movie.checkout();
     }
 }

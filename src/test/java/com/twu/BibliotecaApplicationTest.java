@@ -128,5 +128,16 @@ class BibliotecaApplicationTest {
 
             verify(mockMoviesList, times(1)).showInfo();
         }
+
+        @Test
+        void check_out_a_movie() {
+            provideInSteam("5\n1");
+            MoviesList mockMoviesList = mock(MoviesList.class);
+            BibliotecaApplication.moviesList = mockMoviesList;
+
+            BibliotecaApplication.welcome();
+
+            verify(mockMoviesList, times(1)).checkout("1");
+        }
     }
 }
